@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/hip-music.mp3-9a3c5b71d4f8d0ed367ffdaa8266d5aa.mp3str"
+
+[deps]
+
+source_file="res://rooms/galley_room/hip-music.mp3"
+dest_files=[ "res://.import/hip-music.mp3-9a3c5b71d4f8d0ed367ffdaa8266d5aa.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

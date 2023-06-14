@@ -1,0 +1,9 @@
+:look
+say fa "That's a nice wire"
+
+:pickup
+> [!hip_music_playing]
+	say hipster "Hey I need it. I can't live without my music"
+> [hip_music_playing]
+	set_active hipster_wire false
+	inventory_add wire

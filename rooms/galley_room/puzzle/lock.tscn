@@ -1,0 +1,229 @@
+[gd_scene load_steps=24 format=2]
+
+[ext_resource path="res://rooms/galley_room/puzzle/lock.gd" type="Script" id=1]
+[ext_resource path="res://rooms/galley_room/puzzle/lock-background.png" type="Texture" id=3]
+[ext_resource path="res://rooms/galley_room/puzzle/lock-1.png" type="Texture" id=4]
+[ext_resource path="res://rooms/galley_room/puzzle/lock-2.png" type="Texture" id=5]
+[ext_resource path="res://rooms/galley_room/puzzle/lock-3.png" type="Texture" id=6]
+[ext_resource path="res://rooms/galley_room/puzzle/handle.png" type="Texture" id=7]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 20.5, 89 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 22, 85.5 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 303.5, 42.5 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 302.5, 42.5 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 58.5, 88 )
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 58.5, 87.5 )
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 19.5, 67 )
+
+[sub_resource type="RectangleShape2D" id=8]
+extents = Vector2( 83.5, 41.5 )
+
+[sub_resource type="RectangleShape2D" id=9]
+extents = Vector2( 43.5, 42.5 )
+
+[sub_resource type="RectangleShape2D" id=10]
+extents = Vector2( 42, 42.5 )
+
+[sub_resource type="RectangleShape2D" id=11]
+extents = Vector2( 41, 43 )
+
+[sub_resource type="RectangleShape2D" id=12]
+extents = Vector2( 40, 42 )
+
+[sub_resource type="RectangleShape2D" id=13]
+extents = Vector2( 85, 42 )
+
+[sub_resource type="RectangleShape2D" id=14]
+extents = Vector2( 86.5, 41 )
+
+[sub_resource type="GDScript" id=15]
+script/source = "extends KinematicBody2D
+
+var _dragging : bool = false
+const push = 5
+
+func _physics_process(delta: float) -> void:
+	if _dragging:
+		var current_position : Vector2 = self.global_position
+		var mouse_position : Vector2 = get_global_mouse_position()
+		
+		var distance : float = current_position.distance_to(mouse_position)
+		var direction : Vector2 = current_position.direction_to(mouse_position)
+		
+		var speed : float = distance / delta
+		
+		var velocity : Vector2 = direction * speed
+		move_and_slide(velocity, Vector2( 0, 0 ), false, 4, 0.785398, false)
+		for i in get_slide_count():
+			var collision = get_slide_collision(i)
+			if collision.collider is RigidBody2D:
+				var impulse = -collision.normal * push
+				collision.collider.apply_central_impulse(Vector2 (impulse.x, 0))
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and not event.is_pressed():
+		_dragging = false
+
+func _on_handle_input_event(viewport, event, shape_idx):
+	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
+		if (event.is_pressed()):
+			_dragging = true
+"
+
+[sub_resource type="CircleShape2D" id=16]
+radius = 27.8927
+
+[sub_resource type="RectangleShape2D" id=17]
+extents = Vector2( 9, 32.5 )
+
+[node name="lock" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Lock-background" type="Sprite" parent="."]
+position = Vector2( 753, 495 )
+texture = ExtResource( 3 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Lock-background"]
+position = Vector2( -363, -135 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Lock-background/StaticBody2D"]
+position = Vector2( 0.5, 7 )
+shape = SubResource( 1 )
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Lock-background"]
+position = Vector2( -361, 139 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Lock-background/StaticBody2D2"]
+position = Vector2( 0, -13.5 )
+shape = SubResource( 2 )
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="Lock-background"]
+position = Vector2( 5, -172 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Lock-background/StaticBody2D3"]
+position = Vector2( -42.5, -4.5 )
+shape = SubResource( 3 )
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="Lock-background"]
+position = Vector2( 8, 170 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Lock-background/StaticBody2D4"]
+position = Vector2( -43.5, 0.5 )
+shape = SubResource( 4 )
+
+[node name="StaticBody2D5" type="StaticBody2D" parent="Lock-background"]
+position = Vector2( 327, -129 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Lock-background/StaticBody2D5"]
+position = Vector2( -1.5, -1 )
+shape = SubResource( 5 )
+
+[node name="StaticBody2D6" type="StaticBody2D" parent="Lock-background"]
+position = Vector2( 325, 129 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Lock-background/StaticBody2D6"]
+position = Vector2( 0.5, -4.5 )
+shape = SubResource( 6 )
+
+[node name="StaticBody2D7" type="StaticBody2D" parent="Lock-background"]
+position = Vector2( 417, -2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Lock-background/StaticBody2D7"]
+position = Vector2( -9.5, 3 )
+shape = SubResource( 7 )
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+position = Vector2( 751, 494 )
+mode = 2
+mass = 0.1
+gravity_scale = 0.0
+linear_damp = 20.0
+angular_damp = 100.0
+
+[node name="Sprite" type="Sprite" parent="RigidBody2D"]
+texture = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+position = Vector2( -168.5, 82.5 )
+shape = SubResource( 8 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="RigidBody2D"]
+position = Vector2( 49.5, 84.5 )
+shape = SubResource( 9 )
+
+[node name="RigidBody2D2" type="RigidBody2D" parent="."]
+position = Vector2( 751, 494 )
+mode = 2
+mass = 0.1
+gravity_scale = 0.0
+linear_damp = 20.0
+angular_damp = 100.0
+
+[node name="Sprite" type="Sprite" parent="RigidBody2D2"]
+texture = ExtResource( 5 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D2"]
+position = Vector2( -210, -3.5 )
+shape = SubResource( 10 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="RigidBody2D2"]
+position = Vector2( -39, -3 )
+shape = SubResource( 11 )
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="RigidBody2D2"]
+position = Vector2( 134, -4 )
+shape = SubResource( 12 )
+
+[node name="RigidBody2D3" type="RigidBody2D" parent="."]
+position = Vector2( 751, 494 )
+mode = 2
+mass = 0.1
+gravity_scale = 0.0
+linear_damp = 20.0
+angular_damp = 100.0
+
+[node name="Sprite" type="Sprite" parent="RigidBody2D3"]
+texture = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D3"]
+position = Vector2( -168, -91 )
+shape = SubResource( 13 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="RigidBody2D3"]
+position = Vector2( 181.5, -90 )
+shape = SubResource( 14 )
+
+[node name="handle" type="KinematicBody2D" parent="."]
+position = Vector2( 1079, 494 )
+input_pickable = true
+script = SubResource( 15 )
+
+[node name="Sprite" type="Sprite" parent="handle"]
+position = Vector2( -307, 6 )
+texture = ExtResource( 7 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="handle"]
+shape = SubResource( 16 )
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2( 387, 495 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( -7, 0.5 )
+shape = SubResource( 17 )
+
+[connection signal="input_event" from="handle" to="handle" method="_on_handle_input_event"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]

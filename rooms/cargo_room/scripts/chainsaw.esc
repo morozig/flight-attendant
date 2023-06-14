@@ -1,0 +1,3 @@
+:pickup
+set_angle fa 180
+say fa "What do you want to saw with it on a plane?"

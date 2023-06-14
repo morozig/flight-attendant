@@ -1,0 +1,18 @@
+:exit_scene
+> [!cargo_open]
+	set_angle fa 180
+  say fa "It's locked. I need to unlock it first"
+> [cargo_open]
+	change_scene res://rooms/cargo_room/cargo_room.tscn
+
+:use
+> [!cargo_open]
+	spawn puzzle "res://rooms/galley_room/puzzle/puzzle.tscn"
+> [cargo_open]
+  say fa "The door is open"
+
+:pickup
+> [!cargo_open]
+	spawn puzzle "res://rooms/galley_room/puzzle/puzzle.tscn"
+> [cargo_open]
+  say fa "The door is open"

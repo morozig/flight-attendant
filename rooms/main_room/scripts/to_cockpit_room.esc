@@ -1,0 +1,11 @@
+:exit_scene
+> [!i/card]
+	set_angle fa 180
+  say fa "It's locked. I need a card"
+	stop
+> [i/card]
+	change_scene res://rooms/cockpit_room/cockpit_room.tscn
+	stop
+
+:use card
+say fa "The door is unlocked now"

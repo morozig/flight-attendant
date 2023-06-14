@@ -1,0 +1,5 @@
+:look
+say fa "It's a bag full with music disks"
+
+:pickup
+inventory_add disk

@@ -1,0 +1,135 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://rooms/main_room/main.png" type="Texture" id=1]
+[ext_resource path="res://addons/escoria-core/game/core-scripts/esc_background.gd" type="Script" id=2]
+[ext_resource path="res://addons/escoria-core/game/core-scripts/esc_room.gd" type="Script" id=3]
+[ext_resource path="res://addons/escoria-core/game/core-scripts/esc_location.gd" type="Script" id=4]
+[ext_resource path="res://addons/escoria-core/game/core-scripts/esc_terrain.gd" type="Script" id=5]
+[ext_resource path="res://characters/fa.scn" type="PackedScene" id=6]
+[ext_resource path="res://rooms/main_room/main-scale.png" type="Texture" id=7]
+[ext_resource path="res://addons/escoria-core/game/core-scripts/esc_exit.gd" type="Script" id=8]
+[ext_resource path="res://addons/escoria-core/game/core-scripts/esc_item.gd" type="Script" id=9]
+[ext_resource path="res://rooms/main_room/kid.png" type="Texture" id=11]
+[ext_resource path="res://rooms/main_room/sleepingman.png" type="Texture" id=12]
+[ext_resource path="res://rooms/main_room/headphones.png" type="Texture" id=13]
+[ext_resource path="res://rooms/main_room/hipster-wire.png" type="Texture" id=14]
+[ext_resource path="res://characters/hipster.scn" type="PackedScene" id=15]
+
+[sub_resource type="NavigationPolygon" id=1]
+vertices = PoolVector2Array( 2985, 968, 113, 953, 327, 751, 629, 733, 1150, 705, 2140, 705, 2688, 592, 2196, 603 )
+polygons = [ PoolIntArray( 0, 1, 2, 3, 4, 5 ), PoolIntArray( 6, 0, 5, 7 ) ]
+outlines = [ PoolVector2Array( 113, 953, 327, 751, 629, 733, 1150, 705, 2140, 705, 2196, 603, 2688, 592, 2985, 968 ) ]
+
+[node name="main_room" type="Node2D"]
+script = ExtResource( 3 )
+global_id = "main_room"
+esc_script = "res://rooms/main_room/scripts/main_room.esc"
+player_scene = ExtResource( 6 )
+camera_limits = [ Rect2( 0, 0, 3104, 1024 ) ]
+
+[node name="Background" type="TextureRect" parent="."]
+mouse_filter = 2
+texture = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="WalkableArea" type="Navigation2D" parent="."]
+script = ExtResource( 5 )
+scales = ExtResource( 7 )
+scale_min = 0.8
+player_speed_multiplier = 1.5
+
+[node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="WalkableArea"]
+navpoly = SubResource( 1 )
+
+[node name="RoomObjects" type="Node2D" parent="."]
+
+[node name="to_galley_room" type="Area2D" parent="RoomObjects"]
+script = ExtResource( 8 )
+tooltip_name = "To galley"
+target_scene = "res://rooms/galley_room/galley_room.tscn"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="RoomObjects/to_galley_room"]
+polygon = PoolVector2Array( 7, 210, 171, 114, 191, 795, 7, 976 )
+
+[node name="main_left_exit" type="Position2D" parent="RoomObjects/to_galley_room"]
+position = Vector2( 243, 885 )
+script = ExtResource( 4 )
+global_id = "main_left_exit"
+
+[node name="to_cockpit_room" type="Area2D" parent="RoomObjects"]
+pause_mode = 1
+script = ExtResource( 9 )
+global_id = "to_cockpit_room"
+esc_script = "res://rooms/main_room/scripts/to_cockpit_room.esc"
+is_exit = true
+tooltip_name = "To cockpit"
+combine_when_selected_action_is_in = [  ]
+dialog_color = Color( 1, 1, 1, 1 )
+animations = null
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="RoomObjects/to_cockpit_room"]
+polygon = PoolVector2Array( 2927, 8, 3094, 8, 3096, 978, 2907, 760 )
+
+[node name="main_right_exit" type="Position2D" parent="RoomObjects/to_cockpit_room"]
+position = Vector2( 2919, 929 )
+script = ExtResource( 4 )
+global_id = "main_right_exit"
+
+[node name="Kid" type="Sprite" parent="RoomObjects"]
+position = Vector2( 2038, 464 )
+scale = Vector2( 0.575195, 0.575195 )
+texture = ExtResource( 11 )
+
+[node name="Sleepingman" type="Sprite" parent="RoomObjects"]
+position = Vector2( 547, 441 )
+scale = Vector2( 0.900391, 0.900391 )
+texture = ExtResource( 12 )
+
+[node name="hipster_wire" type="Area2D" parent="RoomObjects"]
+pause_mode = 1
+script = ExtResource( 9 )
+global_id = "hipster_wire"
+esc_script = "res://rooms/main_room/scripts/hipster_wire.esc"
+tooltip_name = "Wire"
+combine_when_selected_action_is_in = [  ]
+inventory_texture = ExtResource( 14 )
+dialog_color = Color( 1, 1, 1, 1 )
+animations = null
+
+[node name="hister-wire" type="Sprite" parent="RoomObjects/hipster_wire"]
+position = Vector2( 1115, 450 )
+scale = Vector2( 0.306686, 0.306686 )
+texture = ExtResource( 14 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="RoomObjects/hipster_wire"]
+polygon = PoolVector2Array( 1188, 575, 1296, 584, 1318, 614, 1306, 655, 1221, 652 )
+
+[node name="ESCLocation" type="Position2D" parent="RoomObjects/hipster_wire"]
+position = Vector2( 1265, 740 )
+script = ExtResource( 4 )
+
+[node name="hipster" parent="RoomObjects" instance=ExtResource( 15 )]
+position = Vector2( 1069, 733 )
+scale = Vector2( 0.371561, 0.355029 )
+
+[node name="headphones" type="Area2D" parent="RoomObjects"]
+pause_mode = 1
+script = ExtResource( 9 )
+global_id = "headphones"
+is_interactive = false
+tooltip_name = "Headphones"
+combine_when_selected_action_is_in = [  ]
+inventory_texture = ExtResource( 13 )
+dialog_color = Color( 1, 1, 1, 1 )
+animations = null
+
+[node name="Headphones" type="Sprite" parent="RoomObjects/headphones"]
+position = Vector2( 1069, 486 )
+scale = Vector2( 0.392334, 0.392334 )
+texture = ExtResource( 13 )
+
+[node name="StartPos" type="Position2D" parent="."]
+position = Vector2( 2452, 664 )
+script = ExtResource( 4 )
+global_id = "main_room_start_pos"
+is_start_location = true

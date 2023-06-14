@@ -1,0 +1,127 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://rooms/galley_room/background.png" type="Texture" id=1]
+[ext_resource path="res://addons/escoria-core/game/core-scripts/esc_terrain.gd" type="Script" id=2]
+[ext_resource path="res://addons/escoria-core/game/core-scripts/esc_room.gd" type="Script" id=3]
+[ext_resource path="res://addons/escoria-core/game/core-scripts/esc_location.gd" type="Script" id=4]
+[ext_resource path="res://addons/escoria-core/game/core-scripts/esc_background.gd" type="Script" id=5]
+[ext_resource path="res://characters/fa.scn" type="PackedScene" id=6]
+[ext_resource path="res://rooms/galley_room/scale.png" type="Texture" id=7]
+[ext_resource path="res://addons/escoria-core/game/core-scripts/esc_exit.gd" type="Script" id=8]
+[ext_resource path="res://rooms/galley_room/card2.png" type="Texture" id=9]
+[ext_resource path="res://addons/escoria-core/game/core-scripts/esc_item.gd" type="Script" id=10]
+[ext_resource path="res://rooms/galley_room/player.png" type="Texture" id=11]
+
+[sub_resource type="NavigationPolygon" id=1]
+vertices = PoolVector2Array( 81, 963, 236, 685, 1295, 691, 1428, 965 )
+polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
+outlines = [ PoolVector2Array( 81, 963, 236, 685, 1295, 691, 1428, 965 ) ]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 58.5, 18.5 )
+
+[node name="galley_room" type="Node2D"]
+script = ExtResource( 3 )
+global_id = "galley_room"
+esc_script = "res://rooms/galley_room/scripts/galley_room.esc"
+player_scene = ExtResource( 6 )
+
+[node name="Background" type="TextureRect" parent="."]
+mouse_filter = 2
+texture = ExtResource( 1 )
+script = ExtResource( 5 )
+
+[node name="WalkableArea" type="Navigation2D" parent="."]
+script = ExtResource( 2 )
+scales = ExtResource( 7 )
+scale_min = 0.8
+player_speed_multiplier = 1.5
+
+[node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="WalkableArea"]
+navpoly = SubResource( 1 )
+
+[node name="RoomObjects" type="Node2D" parent="."]
+
+[node name="to_main_room" type="Area2D" parent="RoomObjects"]
+script = ExtResource( 8 )
+tooltip_name = "To cabin"
+target_scene = "res://rooms/main_room/main_room.tscn"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="RoomObjects/to_main_room"]
+position = Vector2( 890, 11 )
+scale = Vector2( 1.08569, 1.08624 )
+polygon = PoolVector2Array( 422.774, 614.047, 432.906, 155.583, 592.253, 275.262, 590.41, 907.721 )
+
+[node name="galley_right_exit" type="Position2D" parent="RoomObjects/to_main_room"]
+position = Vector2( 1316, 828 )
+script = ExtResource( 4 )
+global_id = "galley_right_exit"
+
+[node name="galley_card" type="Area2D" parent="RoomObjects"]
+pause_mode = 1
+script = ExtResource( 10 )
+global_id = "galley_card"
+esc_script = "res://rooms/galley_room/scripts/galley_card.esc"
+tooltip_name = "Card"
+combine_when_selected_action_is_in = [  ]
+inventory_texture = ExtResource( 9 )
+dialog_color = Color( 1, 1, 1, 1 )
+animations = null
+
+[node name="Card2" type="Sprite" parent="RoomObjects/galley_card"]
+position = Vector2( 1113, 363 )
+scale = Vector2( 0.398292, 0.343137 )
+texture = ExtResource( 9 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="RoomObjects/galley_card"]
+polygon = PoolVector2Array( 1082, 350, 1136, 349, 1144, 376, 1084, 377 )
+
+[node name="ESCLocation" type="Position2D" parent="RoomObjects/galley_card"]
+position = Vector2( 1156, 720 )
+script = ExtResource( 4 )
+
+[node name="to_cargo_room" type="Area2D" parent="RoomObjects"]
+pause_mode = 1
+script = ExtResource( 10 )
+esc_script = "res://rooms/galley_room/scripts/to_cargo_room.esc"
+is_exit = true
+tooltip_name = "To cargo hold"
+combine_when_selected_action_is_in = [  ]
+dialog_color = Color( 1, 1, 1, 1 )
+animations = null
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="RoomObjects/to_cargo_room"]
+polygon = PoolVector2Array( 1, 245, 127, 149, 149, 761, 3, 999 )
+
+[node name="galley_left_exit" type="Position2D" parent="RoomObjects/to_cargo_room"]
+position = Vector2( 184, 882 )
+script = ExtResource( 4 )
+global_id = "galley_left_exit"
+
+[node name="musicplayer" type="Area2D" parent="RoomObjects"]
+pause_mode = 1
+script = ExtResource( 10 )
+esc_script = "res://rooms/galley_room/scripts/musicplayer.esc"
+combine_when_selected_action_is_in = [  ]
+inventory_texture = ExtResource( 11 )
+dialog_color = Color( 1, 1, 1, 1 )
+animations = null
+
+[node name="Player" type="Sprite" parent="RoomObjects/musicplayer"]
+position = Vector2( 683, 269 )
+scale = Vector2( 0.293945, 0.293945 )
+texture = ExtResource( 11 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RoomObjects/musicplayer"]
+position = Vector2( 684.5, 257.5 )
+shape = SubResource( 2 )
+
+[node name="ESCLocation" type="Position2D" parent="RoomObjects/musicplayer"]
+position = Vector2( 682, 716 )
+script = ExtResource( 4 )
+
+[node name="StartPos" type="Position2D" parent="."]
+position = Vector2( 793, 730 )
+script = ExtResource( 4 )
+global_id = "galley_room_start_pos"
+is_start_location = true

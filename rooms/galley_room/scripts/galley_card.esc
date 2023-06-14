@@ -1,0 +1,7 @@
+:look
+say fa "It's my card"
+stop
+
+:pickup
+inventory_add card
+set_active galley_card false

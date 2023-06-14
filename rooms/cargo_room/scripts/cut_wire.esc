@@ -1,0 +1,8 @@
+:use wire
+inventory_remove wire
+change_scene res://rooms/outro_room/outro_room.tscn
+
+:look
+say fa "The hamster gnawed through the wire"
+say fa "How did he even get there?"
+stop

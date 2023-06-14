@@ -796,12 +796,12 @@ escoria="*res://addons/escoria-core/game/esc_autoload.gd"
 
 [display]
 
-window/size/width=1556
+window/size/width=1536
 window/size/height=1024
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/escoria-core/plugin.cfg", "res://addons/escoria-dialog-simple/plugin.cfg", "res://addons/escoria-ui-simplemouse/plugin.cfg", "res://addons/escoria-wizard/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/escoria-core/plugin.cfg", "res://addons/escoria-dialog-simple/plugin.cfg", "res://addons/escoria-ui-simplemouse/plugin.cfg" )
 
 [escoria]
 
@@ -843,13 +843,12 @@ sound/speech_extension="ogg"
 platform/skip_cache=false
 platform/skip_cache.mobile=true
 dialog_simple/avatars_path="res://game/dialog_avatars"
-dialog_simple/text_time_per_letter_ms=100
-dialog_simple/text_time_per_fast_letter_ms=25
+dialog_simple/text_time_per_letter_ms=40
+dialog_simple/text_time_per_fast_letter_ms=20
 dialog_simple/clear_text_by_click_only=false
 dialog_simple/reading_speed_in_wpm=200
 dialog_simple/left_click_action="Speed up"
 dialog_simple/stop_talking_animation_on="End of audio"
-wizard/path_to_rooms="res://rooms"
 
 [gui]
 

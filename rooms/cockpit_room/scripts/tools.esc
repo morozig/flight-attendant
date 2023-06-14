@@ -1,0 +1,6 @@
+:look
+say fa "There are some tools here"
+
+:pickup
+say fa "A screwdriver! Might be useful"
+inventory_add screwdriver

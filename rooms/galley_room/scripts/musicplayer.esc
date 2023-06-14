@@ -1,0 +1,7 @@
+:look
+say fa "It's a music player for cabin"
+
+:use disk
+inventory_remove disk
+set_global hip_music_playing true
+play_snd res://rooms/galley_room/hip-music.mp3 _music

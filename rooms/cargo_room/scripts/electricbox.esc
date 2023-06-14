@@ -1,0 +1,9 @@
+:pickup
+say fa "I can't open it. It's screwd"
+
+:use screwdriver
+inventory_remove screwdriver
+set_global is_electricbox_open true
+set_active electricbox false
+set_active cut_wire true
+set_active shocked_hamster true

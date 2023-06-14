@@ -1,0 +1,7 @@
+:look
+say fa "The hamster is alive"
+say fa "A little shocked though..."
+
+:pickup
+set_active shocked_hamster false
+inventory_add hamster
